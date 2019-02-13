@@ -1,0 +1,2 @@
+class Stationery < ApplicationRecord
+end

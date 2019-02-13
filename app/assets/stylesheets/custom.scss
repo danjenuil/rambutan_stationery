@@ -10,7 +10,17 @@
 }
 
 #home_bg_img {
-    background-image: url('/assets/backgrounds/home_bg_img.jpg');
+    background-image: url('/assets/backgrounds/home_bg_img.png');
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#tune_bg_img {
+    opacity: 0.8;
+    filter: brightness(50%);
 }
 
 .white_text {

@@ -1,14 +1,17 @@
 <% if user_signed_in? %>
-    <p style="color: black;"> Hello there, <%= current_user.first_name %> </p>
+    <p style="color: black;"> Hello there, <%= current_user.first_name %>! </p>
     <p><%= link_to  "Log out", destroy_user_session_path, method: :delete %></p>
 <% else %>
 <div>
 <div id="home_bg_img" class = "center jumbotron">
 <img src="https://rambutancode.com/assets/rambutan1-33062baacf69ee4cd28e3e531fef70a0b378a07bb396117b3e6707dcf8b29381.png" height=80 width=80 class="center"></img>
-<h1 class="display-1" style="color: white;">Rambutan Stationery</h1>
-<p class="white_text">Welcome to Rambutan Stationery</p>
+<h1 style="color: white;">Welcome to Rambutan Stationery</h1>
+<p class="white_text">Office stationeries supply management system</p>
+<span>
 <%= link_to "Sign up", new_user_registration_url , class: "btn btn-lg btn-primary" %>
-<%= link_to "Log in", new_user_session_url , class: "btn btn-lg btn-danger" %>
+<span style="display: inline-block; width: 1cm; color: white; font-size: 1.3em;">or</span>
+<%= link_to "Log in", new_user_session_url , class: "btn btn-lg btn-default" %>
+</span>
 </div>
 </div>
 <% end %>

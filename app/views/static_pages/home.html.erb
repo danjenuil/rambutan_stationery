@@ -1,9 +1,14 @@
+<% if user_signed_in? %>
+    <p style="color: black;"> Hello there <%= current_user.first_name %> </p>
+    <p><%= link_to  "Log out", destroy_user_session_path, method: :delete %></p>
+<% else %>
 <div>
 <div id="home_bg_img" class = "center jumbotron">
 <img src="https://rambutancode.com/assets/rambutan1-33062baacf69ee4cd28e3e531fef70a0b378a07bb396117b3e6707dcf8b29381.png" height=80 width=80 class="center"></img>
-<h1 style="color: white;">Rambutan Stationery</h1>
+<h1 class="display-1" style="color: white;">Rambutan Stationery</h1>
 <p class="white_text">Welcome to Rambutan Stationery</p>
 <%= link_to "Sign up", new_user_registration_url , class: "btn btn-lg btn-primary" %>
-<%= link_to "Log in", new_user_session_url , class: "btn btn-lg btn-danger rounded-pill" %>
+<%= link_to "Log in", new_user_session_url , class: "btn btn-lg btn-danger" %>
 </div>
 </div>
+<% end %>

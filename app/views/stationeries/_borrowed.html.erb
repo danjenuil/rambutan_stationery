@@ -1,0 +1,10 @@
+<% if user_signed_in? %> <!-- user has signed in>
+    <!-- show stationeries that are borrowed by the particular user -->
+    <!-- if user has borrowed at least one item -->
+        <!-- then show all of the borrowed items -->
+    <!-- else -->
+        <p> You currently don't have any items on loan </p>
+    <!-- end -->
+<% else %>
+    <% redirect_to root_url %>
+<% end %>

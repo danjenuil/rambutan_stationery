@@ -1,6 +1,13 @@
 <% if user_signed_in? %>
+    <% provide :title, current_user.first_name %>
+    <div class="container">
     <p style="color: black;"> Hello there, <%= current_user.first_name %>! </p>
-    <p><%= link_to  "Log out", destroy_user_session_path, method: :delete %></p>
+    <h4>Currently borrowed items:</h4>
+    <%= render 'stationeries/borrowed' %>
+    <span><%= link_to  "View stationeries", stationeries_path %></span>
+    <span><%= link_to  "Edit your profile", edit_user_registration_path %></span>
+    <div><%= link_to  "Log out", destroy_user_session_path, method: :delete %></div>
+    <div>
 <% else %>
 <div>
 <div id="home_bg_img" class = "center jumbotron">

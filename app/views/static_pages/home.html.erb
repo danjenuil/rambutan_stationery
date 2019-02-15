@@ -1,13 +1,17 @@
 <% if user_signed_in? %>
     <% provide :title, current_user.first_name %>
     <div class="container">
-    <p style="color: black;"> Hello there, <%= current_user.first_name %>! </p>
+    <h3 style="color: black;"> Hello there, <%= current_user.first_name %>! </h3>
+    <% unless current_user.admin? %>
     <h4>Currently borrowed items:</h4>
-    <%= render 'stationeries/borrowed' %>
+        <%= render 'stationeries/borrowed' %>
+    <% end %>
+    <% view_edit_label = "View"%>
     <% if current_user.admin? %>
         <%= link_to  "Add a new stationery", new_stationery_path %>
+        <% view_edit_label = "Edit/Delete"%>
     <% end %>
-    <div><%= link_to  "View stationeries", stationeries_path %></div>
+    <div><%= link_to  "#{view_edit_label} stationeries", stationeries_path %></div>
     <div><%= link_to  "Edit your profile", edit_user_registration_path %></div>
     <div><%= link_to  "Log out", destroy_user_session_path, method: :delete %></div>
     <div>

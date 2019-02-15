@@ -1,19 +1,24 @@
+<% provide :title, "List of stationeries" %>
 <div class="container">
 
-    <h1>List of Stationeries</h1>
-
+    <h1>List of Stationeries (<%= Stationery.count %> in total) </h1>
     <% @stationeries.each do |item| %>
         <!-- Adapted from Bootstrap docs -->
-        <div class="card" style="width: 14rem;">
+        <div class="card" style="width: 16rem;">
             <div class="card-body">
                 <h5 class="card-title"><%= item.name %></h5>
-                <h6 class="card-subtitle mb-2 text-muted"><%= item.product_code %></h6>
+                <h6 class="card-subtitle mb-2 text-muted">Product code: <span><%= item.product_code %></span></h6>
                 <!--<p class="card-text">Count: 1</p>-->
                 <% if user_signed_in? %>
-                    <%= form_for(:transaction, url: borrow_path) do |f| %>
-                    <%= hidden_field_tag :item_id, item.id %> <!-- stationery_id in Transactions table -->
-                    <%= hidden_field_tag :borrower_id, current_user.id %> <!-- user_id in Transactions table -->
-                    <%= f.submit "Borrow", class: "btn btn-primary" %>
+                    <% if current_user.admin? %>
+                        <%= link_to "Edit", item, method: :patch, class: "btn btn-primary"%>
+                        <%= link_to "Delete", item, method: :delete, data: { confirm: "Are you sure you want to delete #{item.name}?" }, class: "btn btn-danger" %>       
+                    <% else %>
+                        <%= form_for(:transaction, url: borrow_path) do |f| %>
+                        <%= hidden_field_tag :item_id, item.id %> <!-- stationery_id in Transactions table -->
+                        <%= hidden_field_tag :borrower_id, current_user.id %> <!-- user_id in Transactions table -->
+                        <%= f.submit "Borrow", class: "btn btn-primary" %>
+                        <% end %>
                     <% end %>
                 <% else %>
                     <%= link_to "Sign in to borrow", new_user_session_path, class: "card-link btn btn-primary" %>

@@ -1,2 +1,7 @@
+<% provide :title, "Borrow an item" %>
+<div class="container">
 <h1>Borrow an item</h1>
 <p>Are you sure want to borrow <%= @item_to_borrow.name %> ?</p>
+<%= link_to  "Yes", "#", method: :post, class: "btn btn-success"%>
+<%= link_to  "No", stationeries_path, class: "btn btn-danger"%>
+</div>

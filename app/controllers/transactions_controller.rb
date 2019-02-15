@@ -11,7 +11,8 @@ class TransactionsController < ApplicationController
     @item_to_borrow = Stationery.find(params[:item_id])
     @user = User.find(params[:borrower_id])
     if current_user.id == params[:borrower_id].to_i
-      render 'new'
+      render "new"
+      #@user.transactions.build(user_id: @user.id, stationery_id: @item_to_borrow)
     else
       redirect_to root_url
     end

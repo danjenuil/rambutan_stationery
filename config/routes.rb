@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  get '/borrow', to: 'transactions#new'
+  post '/borrow', to: 'transactions#create'
   devise_for :users
-  get '/stationeries', to: 'stationeries#show'
+  resources :stationeries
   get "static_pages/about"
   root "static_pages#home"
 end

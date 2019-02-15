@@ -4,8 +4,11 @@
     <p style="color: black;"> Hello there, <%= current_user.first_name %>! </p>
     <h4>Currently borrowed items:</h4>
     <%= render 'stationeries/borrowed' %>
-    <span><%= link_to  "View stationeries", stationeries_path %></span>
-    <span><%= link_to  "Edit your profile", edit_user_registration_path %></span>
+    <% if current_user.admin? %>
+        <%= link_to  "Add a new stationery", new_stationery_path %>
+    <% end %>
+    <div><%= link_to  "View stationeries", stationeries_path %></div>
+    <div><%= link_to  "Edit your profile", edit_user_registration_path %></div>
     <div><%= link_to  "Log out", destroy_user_session_path, method: :delete %></div>
     <div>
 <% else %>

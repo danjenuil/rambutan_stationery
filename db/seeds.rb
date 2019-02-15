@@ -1013,14 +1013,14 @@ sample_stationeries = ["Blue marker pen", "Red marker pen", "Black marker pen", 
 
 n = 0
 sample_stationeries.each do |item_name|
-    Stationery.create(name: item_name, product_code: random_codes[n])
+    Stationery.create(name: item_name, product_code: random_codes[n], cupboard_num: [1,2].sample)
     n += 1
 end
 
-some_users = [["Danial", "Jenuil", "danial@rambutancode.com"],["John", "Doe", "johndoe@example.com"],
-                ["Jane", "Doe", "janedoe@example.com"], ["Foo", "Bar", "foobar@example.com"]]
+some_users = [["Danial", "Jenuil", "danial@rambutancode.com", true],["John", "Doe", "johndoe@example.com", false],
+                ["Jane", "Doe", "janedoe@example.com", false], ["Foo", "Bar", "foobar@example.com", false]]
 
 password = 'password'
-some_users.each do |fname, lname, email|
-    User.create(first_name: fname, last_name: lname, email: email, password: password)
+some_users.each do |fname, lname, email, is_admin|
+    User.create(first_name: fname, last_name: lname, email: email, password: password, admin: is_admin)
 end

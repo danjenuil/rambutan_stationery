@@ -1,0 +1,22 @@
+<% provide :title, "Stationery borrowal/usage history"%>
+
+<div class="container">
+<h3>Stationery borrowal/usage history<h3>
+<table class="table">
+<thead>
+    <% ["Return timestamps", "Due date", "Stationery name", "Quantity"].each do |column| %>
+        <th><%= column %></th>
+    <% end %>
+</thead>
+<% @history.each do |t| %>
+<tr>
+    <% [get_date_string(t.returned_date), get_date_string(t.due_date), Stationery.find_by(id: t.stationery_id).name, t.quantity].each do |data| %>
+    <td>
+        <%= data %>
+    </td>
+    <% end %>
+</tr>
+
+<% end %>
+</table>
+</div>

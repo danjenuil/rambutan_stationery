@@ -1,7 +1,10 @@
 <% provide :title, "Borrow an item" %>
 <div class="container">
-<h1>Borrow an item</h1>
-<p>Are you sure want to borrow <%= @item_to_borrow.name %> ?</p>
-<%= link_to  "Yes", "#", method: :post, class: "btn btn-success"%>
-<%= link_to  "No", stationeries_path, class: "btn btn-danger"%>
+<h3>Transaction receipt</h3>
+<p>Item name: <%= @item.name %></p>
+<p>Quantity: <%= @transact.quantity %> </p>
+<% if @transact.due_date %>
+<p>Due: <%= DateTime.parse(@transact.due_date.to_s).strftime("%l:%M %p, %e %B %Y (%A)") %></p>
+<% end %>
+<%= link_to "Back to Stationeries", stationeries_path, class: "btn btn-primary" %>
 </div>

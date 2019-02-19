@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_15_041646) do
+ActiveRecord::Schema.define(version: 2019_02_17_155950) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,7 +21,8 @@ ActiveRecord::Schema.define(version: 2019_02_15_041646) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "cupboard_num"
-    t.index ["product_code"], name: "index_stationeries_on_product_code", unique: true
+    t.integer "quantity"
+    t.integer "stationery_type"
   end
 
   create_table "transactions", force: :cascade do |t|
@@ -29,6 +30,10 @@ ActiveRecord::Schema.define(version: 2019_02_15_041646) do
     t.bigint "stationery_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "quantity"
+    t.boolean "needs_return"
+    t.datetime "due_date"
+    t.datetime "returned_date"
     t.index ["stationery_id"], name: "index_transactions_on_stationery_id"
     t.index ["user_id"], name: "index_transactions_on_user_id"
   end

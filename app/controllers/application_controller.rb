@@ -6,6 +6,16 @@ class ApplicationController < ActionController::Base
         redirect_to root_path
       end
     end
+
+    def determine_transaction_type(stationery)
+      if stationery.borrowable?
+          "Borrow"
+      elsif stationery.fixed?
+          "Use"
+      else
+          "Take"
+      end
+    end
   
     protected
   

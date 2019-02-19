@@ -1,20 +1,30 @@
 <% if user_signed_in? %>
     <% provide :title, current_user.first_name %>
-    <div class="container">
+    <div>
     <h3 style="color: black;"> Hello there, <%= current_user.first_name %>! </h3>
     <% unless current_user.admin? %>
-    <h4>Currently borrowed items:</h4>
+        <% if !no_outstanding_fines? %>
+            <p>Outstanding fine: RM <%= calculate_fines %></p>
+        <% else %>
+            <p>You currently have no outstanding fines.</p>
+        <% end %>
         <%= render 'stationeries/borrowed' %>
+        <% if !Transaction.where(user_id: current_user.id, needs_return: true).where.not(returned_date: nil).empty? %>
+        <%= render 'transactions/history' %>
+        <% end %>
     <% end %>
     <% view_edit_label = "View"%>
     <% if current_user.admin? %>
         <%= link_to  "Add a new stationery", new_stationery_path %>
         <% view_edit_label = "Edit/Delete"%>
     <% end %>
+    <% if !Transaction.where(user_id: current_user.id, needs_return: true).where.not(returned_date: nil).empty? %>
+    <div><%= link_to  "Show full borrowal/usage history", history_path %></div>
+    <% end %>
     <div><%= link_to  "#{view_edit_label} stationeries", stationeries_path %></div>
     <div><%= link_to  "Edit your profile", edit_user_registration_path %></div>
     <div><%= link_to  "Log out", destroy_user_session_path, method: :delete %></div>
-    <div>
+    </div>
 <% else %>
 <div>
 <div id="home_bg_img" class = "center jumbotron">

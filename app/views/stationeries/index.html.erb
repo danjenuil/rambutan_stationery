@@ -1,30 +1,54 @@
 <% provide :title, "List of stationeries" %>
+
+<% if no_outstanding_fines? %>
 <div class="container">
 
     <h1>List of Stationeries (<%= Stationery.count %> in total) </h1>
+    <table>
     <% @stationeries.each do |item| %>
         <!-- Adapted from Bootstrap docs -->
-        <div class="card" style="width: 16rem;">
+        <div class="card card-default" style="width: 16rem;">
             <div class="card-body">
                 <h5 class="card-title"><%= item.name %></h5>
-                <h6 class="card-subtitle mb-2 text-muted">Product code: <span><%= item.product_code %></span></h6>
-                <!--<p class="card-text">Count: 1</p>-->
+                <h6 class="card-subtitle mb-2 text-muted">Code: <span><%= item.product_code %></span></h6>
+                <h6 class="card-subtitle mb-2 text-muted">Type: <span><%= item.stationery_type.to_s.capitalize %></span></h6>
+                <% if item.quantity == 0 %>
+                    <h6 class="card-subtitle mb-2 text-muted">Unavailable. Please check again later.</h6>
+                <% else %>
+                    <h6 class="card-subtitle mb-2 text-muted">Available: <span><%= item.quantity %></span></h6>
+                <% end %>
                 <% if user_signed_in? %>
                     <% if current_user.admin? %>
-                        <%= link_to "Edit", item, method: :patch, class: "btn btn-primary"%>
+                        <%= link_to "Edit", edit_stationery_path(item.id), method: :get, class: "btn btn-primary" %>  
                         <%= link_to "Delete", item, method: :delete, data: { confirm: "Are you sure you want to delete #{item.name}?" }, class: "btn btn-danger" %>       
                     <% else %>
                         <%= form_for(:transaction, url: borrow_path) do |f| %>
-                        <%= hidden_field_tag :item_id, item.id %> <!-- stationery_id in Transactions table -->
-                        <%= hidden_field_tag :borrower_id, current_user.id %> <!-- user_id in Transactions table -->
-                        <%= f.submit "Borrow", class: "btn btn-primary" %>
+                        <%= f.hidden_field :item_id, value: item.id %> 
+                        <%= f.hidden_field :borrower_id, value: current_user.id %> 
+                        <% if item.quantity > 0 %>
+                            <span><h6>Select quantity:</h6></span>
+                            <% if !item.fixed? %>
+                                <%= f.number_field :quantity, min: 1, max: item.quantity, class: "form-control", value: 1 %>
+                            <% else %>
+                                <%= f.number_field :quantity, min: 1, max: 1, class: "form-control", readonly: true, value: 1 %>
+                            <% end %>
+                            <br/>
+                            <%= f.submit determine_transaction_type(item), class: "btn btn-primary", data: { confirm: "Are you sure you want to #{determine_transaction_type(item).to_s.downcase} #{item.name}?"} %>
+                        <% else %>
+                            <%= f.submit determine_transaction_type(item), class: "btn btn-primary", disabled: true %>
                         <% end %>
+                    <% end %>
                     <% end %>
                 <% else %>
                     <%= link_to "Sign in to borrow", new_user_session_path, class: "card-link btn btn-primary" %>
                 <% end %>
             </div>
         </div>
-
-<% end %>
+    <% end %>
+</table>
 </div>
+<% else %>
+<div class="container">
+<p>You currently have outstanding fines. Please return your borrowed/used items and pay your fines before borrowing any more items.</p>
+<%= link_to "Back to Home", root_path, class: "btn btn-primary" %>
+<% end %>

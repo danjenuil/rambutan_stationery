@@ -1008,12 +1008,20 @@ random_codes = %w(
     2MT2JWDA
     G48LZ2LK
 ) #generated using www.randomcodegenerator.com
-sample_stationeries = ["Blue marker pen", "Red marker pen", "Black marker pen", "Stapler", 
-                        "Post-it notes", "A4 Paper", "Scissor", "Pencil", "Eraser", "Yellow highlighter"]
-
+sample_stationeries = [["Blue marker pen", 8, 0], 
+                        ["Red marker pen", 6, 0], 
+                        ["Black marker pen", 10, 0], 
+                        ["Stapler", 1, 1], 
+                        ["Post-it notes", 60, 2], 
+                        ["A4 Paper", 100, 2], 
+                        ["Scissor", 2, 1], 
+                        ["Pencil", 5, 0], 
+                        ["Eraser", 3, 0], 
+                        ["Yellow highlighter", 4, 0],
+                        ["Plastic ruler", 2, 1]]
 n = 0
-sample_stationeries.each do |item_name|
-    Stationery.create(name: item_name, product_code: random_codes[n], cupboard_num: [1,2].sample)
+sample_stationeries.each do |item_name, quantity, type|
+    Stationery.create(name: item_name, product_code: random_codes[n], cupboard_num: [1,2].sample, quantity: quantity, stationery_type: type)
     n += 1
 end
 

@@ -1,10 +1,29 @@
 <% if user_signed_in? %> <!-- user has signed in>
-    <!-- show stationeries that are borrowed by the particular user -->
-    <!-- if user has borrowed at least one item -->
-        <!-- then show all of the borrowed items -->
-    <!-- else -->
+    <!-- show stationeries that are borrowed/used by the particular user -->
+    <% if (items = Transaction.where(user_id: current_user.id, needs_return: true, returned_date: nil)) != 0 %>
+        <h4> You currently have <%= pluralize(items.count, "item") %> on loan/in use: </h4>
+        <table class="table">
+        <tr>
+        <% items.each do |transaction| %>
+            <% stationery = Stationery.find_by(id: transaction.stationery_id) %>
+            <td>
+            <div class="card">
+            <h5 class="card-title"><%= stationery.name %></h5>
+            <h6 class="card-subtitle mb-2 text-muted">Quantity: <%= transaction.quantity %></h6>
+            <h6 class="card-subtitle mb-2 text-muted">Due: <%= DateTime.parse(transaction.due_date.to_s).strftime("%l:%M %p, %e %B %Y")%></h6>
+            <%= form_for transaction, url: return_path, method: :post do |f| %>
+            <%= hidden_field_tag :item_to_be_returned, transaction.id %>
+            <%= f.submit "Return", class: "btn btn-primary", data: { confirm: "Are you sure you want to return #{stationery.name}?"} %>
+            <% end %>
+            </div>
+            <td>
+            <br/>
+        <% end %>
+        </tr>
+        </table>
+    <% else %>
         <p> You currently don't have any items on loan </p>
-    <!-- end -->
+    <% end %>
 <% else %>
     <% redirect_to root_url %>
 <% end %>

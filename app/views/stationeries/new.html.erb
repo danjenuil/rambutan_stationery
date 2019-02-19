@@ -1,6 +1,6 @@
 <% provide :title, "Add a stationery" %>
 
-<div class="container">
+<div class="container jumbotron">
 
   <div class="col-md-6 col-md-offset-3 containe">
     <%= form_for(@stationery) do |f| %>
@@ -12,10 +12,18 @@
       <%= f.text_field :product_code, class: "form-control" %>
       </br>
       <%= f.label :cupboard_num, "Cupboard number" %>
-      <%= f.text_field :cupboard_num, class: "form-control" %>
+      <%= f.number_field :cupboard_num, min: 1, max: 2, class: "form-control" %>
+      </br>
+      <%= f.label :quantity, "Quantity" %>
+      <%= f.number_field :quantity, min: 0, class: "form-control" %>
+      </br>
+
+      <%= f.label :stationery_type, "Stationery type" %>
+      </br>
+      <%= f.select :stationery_type, options_from_enum_for_select(@stationery, :stationery_type) %>
+      </br>
       </br>
       <%= f.submit "Add item", class: "btn btn-primary" %>
-      </br>
     <% end %>
   </div>
 </div>

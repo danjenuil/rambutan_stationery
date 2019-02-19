@@ -3,7 +3,7 @@
 <% if no_outstanding_fines? %>
 <div class="container">
 
-    <h1>List of Stationeries (<%= Stationery.count %> in total) </h1>
+    <h3>List of Stationeries (<%= Stationery.count %> in total) </h3>
     <% @stationeries.each do |item| %>
         <!-- Adapted from Bootstrap docs -->
         <div class="card card-default" style="width: 16rem;">
@@ -47,7 +47,7 @@
 </div>
 <% else %>
 <div class="container">
-<p>You currently have outstanding fines. Please return your borrowed/used items and pay your fines before borrowing any more items.</p>
+<p>You currently have outstanding fines. Please return your borrowed/used items and pay your fines before getting any more items.</p>
 <%= link_to "Back to Home", root_path, class: "btn btn-primary" %>
 </div>
 <% end %>

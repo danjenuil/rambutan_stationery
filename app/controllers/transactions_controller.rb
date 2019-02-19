@@ -14,13 +14,13 @@ class TransactionsController < ApplicationController
       @quantity = item_params[:quantity].to_i
       new_quantity = @item.quantity - @quantity
       @transact = current_user.transactions.create(stationery_id: @item.id, 
-                                quantity: item_params[:quantity].to_i, 
-                                needs_return: !@item.consumable? ? true : false,
-                                due_date: needs_due_date(@item), 
-                                returned_date: nil)
+                                                  quantity: item_params[:quantity].to_i, 
+                                                  needs_return: !@item.consumable? ? true : false,
+                                                  due_date: needs_due_date(@item), 
+                                                  returned_date: nil)
       @item.update_attributes(quantity: new_quantity)
       flash[:success] = "Transaction was successful!"
-      redirect_to borrow_path
+      redirect_to action: "new"
     else
       flash[:danger] = "Transaction was unsuccessful, please try again."
       redirect_to stationery_path
@@ -49,13 +49,13 @@ class TransactionsController < ApplicationController
 
   private
 
-    def item_params
-      params.require(:transaction).permit(:item_id, :borrower_id, :quantity, :commit)
-    end
+  def item_params
+    params.require(:transaction).permit(:item_id, :borrower_id, :quantity)
+  end
 
-    def logged_in
-      unless user_signed_in?
-        redirect_to root_url
-      end
+  def logged_in
+    unless user_signed_in?
+      redirect_to root_url
     end
+  end
 end

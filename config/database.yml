@@ -80,7 +80,7 @@ test:
 #
 production:
   <<: *default
-  adapter: postgres
+  adapter: postgresql
   database: rambutan_stationery_production
   username: rambutan_stationery
   password: rambutancode

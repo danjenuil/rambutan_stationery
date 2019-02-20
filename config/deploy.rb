@@ -58,11 +58,12 @@ namespace :deploy do
     end
   end
 
-  desc 'Make sure the database is seed with some initial data'
-  task :seed do
+  desc 'Make sure the database is resetted and seeded with some initial data'
+  task :fresh do
     on primary fetch(:migration_role) do
       within release_path do
         with rails_env: fetch(:rails_env) do
+          execute :rake, 'db:migrate:reset'
           execute :rake, 'db:seed'
         end
       end

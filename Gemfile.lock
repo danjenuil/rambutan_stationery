@@ -246,7 +246,7 @@ DEPENDENCIES
   jquery-rails
   listen
   pg (>= 0.18, < 2.0)
-  puma (~> 3.11)
+  puma
   rails (~> 5.2.2)
   sass-rails (~> 5.0)
   selenium-webdriver

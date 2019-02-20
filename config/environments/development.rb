@@ -1,3 +1,4 @@
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -14,6 +15,17 @@ Rails.application.configure do
 
   # Sets up the default url for Devise mailer
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  # Sets up an account to send emails
+  ActionMailer::Base.smtp_settings = {
+    :address              => "smtp.gmail.com",
+    :port                 => 587,
+    :domain               => "gmail.com",
+    :user_name            => ENV["mailer_user_name"],
+    :password             => ENV["mailer_password"],
+    :authentication       => "plain",
+    :enable_starttls_auto => true 
+  }
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.
@@ -34,7 +46,7 @@ Rails.application.configure do
   config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
 
   config.action_mailer.perform_caching = false
 

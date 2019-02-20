@@ -56,16 +56,17 @@ namespace :deploy do
         exit
       end
     end
+  end
 
+  desc 'Make sure the database is seed with some initial data'
   task :seed do
     on primary fetch(:migration_role) do
       within release_path do
-        with rails_env: fetch(:rails_env)  do
-          execute :rails, 'db:seed'
+        with rails_env: fetch(:rails_env) do
+          execute :rake, 'db:seed'
         end
       end
     end
-  end
   end
 
   desc 'Initial Deploy'

@@ -29,10 +29,10 @@ development:
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user that initialized the database.
-  username: rambutan_stationery
+  username: <%= ENV['rambutan_db_username'] %>
 
   # The password associated with the postgres role (username).
-  password: rambutancode
+  password: <%= ENV['rambutan_db_password'] %>
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
@@ -81,6 +81,6 @@ test:
 production:
   adapter: postgresql
   database: rambutan_stationery_production
-  username: rambutan_stationery
-  password: rambutancode
+  username: <%= ENV["rambutan_db_username"] %>
+  password: <%= ENV["rambutan_db_password"] %>
   host: localhost

@@ -79,8 +79,8 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
   adapter: postgresql
   database: rambutan_stationery_production
   username: rambutan_stationery
   password: rambutancode
+  host: localhost
